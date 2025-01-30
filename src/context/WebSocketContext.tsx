@@ -62,7 +62,7 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
     };
 
     useEffect(() => {
-        const socket = new WebSocket('ws://localhost:8080');
+        const socket = new WebSocket(`ws://${process.env.NEXT_PUBLIC_ORIGIN}:8080`);
 
         socket.onopen = () => {
             setConnectionStatus('Connected');
