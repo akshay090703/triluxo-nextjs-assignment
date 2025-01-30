@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
+import AuthProvider from "@/context/AuthProvider";
+import { Toaster } from "sonner";
+import { WebSocketProvider } from "@/context/WebSocketContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,18 +31,23 @@ export default function RootLayout({
     <>
       <html lang="en" suppressHydrationWarning>
         <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <header className="fixed top-0 w-full z-50 bg-white dark:bg-gray-900 shadow">
-              <Navbar />
-            </header>
+          <AuthProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <WebSocketProvider>
+                <header className="fixed top-0 w-full z-50 bg-white dark:bg-gray-900 shadow">
+                  <Navbar />
+                </header>
 
-            {children}
-          </ThemeProvider>
+                {children}
+                <Toaster />
+              </WebSocketProvider>
+            </ThemeProvider>
+          </AuthProvider>
         </body>
       </html>
     </>

@@ -1,9 +1,24 @@
 'use client'
+
 import React, { useEffect, useState } from 'react'
 import { ModeToggle } from './ModeToggle'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { signOut, useSession } from 'next-auth/react'
+import { Button } from './ui/button'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import AIChatButton from './AIChatButton'
+import Image from 'next/image'
 
 const Navbar = () => {
     const [mounted, setMounted] = useState(false);
+    const { data: session, status } = useSession();
+    const router = useRouter();
 
     useEffect(() => {
         setMounted(true);
@@ -19,12 +34,23 @@ const Navbar = () => {
                     <ModeToggle />
                 )}
 
-                <div className="w-10 h-10 rounded-full overflow-hidden">
-                    <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                        <svg className="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path></svg>
-                    </div>
+                <AIChatButton />
 
-                </div>
+                {session ? <div className="w-10 h-10 rounded-full overflow-hidden">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger>
+                            <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                                <Image src={"https://github.com/shadcn.png"} alt='avatar image' width={40} height={40} />
+                            </div>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuItem onClick={() => router.push("/profile")}>Profile</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div> : (
+                    <Button variant={'default'} onClick={() => router.push("/login")}>Login</Button>
+                )}
             </div>
         </nav>
     )
