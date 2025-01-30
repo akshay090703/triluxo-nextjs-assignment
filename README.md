@@ -100,17 +100,13 @@ Create a `.env` file in the root directory and add the following variables:
 # MongoDB
 MONGODB_URI=your-mongodb-atlas-url
 
-# NextAuth
-NEXTAUTH_SECRET=your-secret-key
-NEXTAUTH_URL=http://localhost:3000
+NEXT_PUBLIC_PINECONE_API_KEY = pinecone-api-key
 
-# Pinecone
-PINECONE_API_KEY=your-pinecone-api-key
-PINECONE_ENVIRONMENT=your-pinecone-environment
-PINECONE_INDEX=your-pinecone-index
+NEXTAUTH_SECRET=next-auth-secret
 
-# Gemini API
-GEMINI_API_KEY=your-gemini-api-key
+NEXT_PUBLIC_GEMINI_API_KEY=gemini-api-key
+
+NEXT_PUBLIC_ORIGIN='localhost'
 ```
 
 ### Step 4: Run the Project
